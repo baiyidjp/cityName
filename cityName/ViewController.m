@@ -7,8 +7,10 @@
 //
 
 #import "ViewController.h"
+#import "FirstViewController.h"
 
 @interface ViewController ()
+@property (weak, nonatomic) IBOutlet UIButton *nameBtn;
 
 @end
 
@@ -16,12 +18,25 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    self.title = @"首页";
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeName:) name:@"1234567890" object:nil];
 }
 
+
+- (void)changeName:(NSNotification *)notification{
+
+    NSDictionary *dict = notification.userInfo;
+    [self.nameBtn setTitle:[dict objectForKey:@"name"] forState:UIControlStateNormal];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (IBAction)click:(id)sender {
+    
+    FirstViewController *ctrl = [[FirstViewController alloc]init];
+    [self.navigationController pushViewController:ctrl animated:YES];
 }
 
 @end
